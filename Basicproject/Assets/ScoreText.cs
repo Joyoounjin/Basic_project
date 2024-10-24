@@ -5,18 +5,21 @@ using UnityEngine.UI;
 public class ScoreText : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
-    public Button scoreButton;
-    public int score = 0;
+    public ScoreButton scoreButton;
 
     private void Awake()
     {
         scoreText = GetComponent<TextMeshProUGUI>();
-        scoreButton.onClick.AddListener(RefreshUI);
     }
 
-    void RefreshUI()
+    private void Start()
     {
-        score++;
-        scoreText.text = $"Score: {score}";
+        scoreButton.OnScoreChanged += RefreshUI; // 구독
     }
+
+    void RefreshUI(int newScore)
+    {
+        scoreText.text = $"Score: {newScore}";
+    }
+
 }
